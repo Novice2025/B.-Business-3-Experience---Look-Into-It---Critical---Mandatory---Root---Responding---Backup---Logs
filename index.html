@@ -1,0 +1,1175 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>NEXTATION – Problemas Técnicos & Soluções (Business English)</title>
+  <style>
+    :root {
+      /* NEXTATION WEBSITE — COLOUR SYSTEM (from your PDF) */
+      --bg-main: #02030b; /* Page background */
+      --bg-gradient: radial-gradient(circle at top, #1c1f3b 0%, #050716 45%, #02030b 100%);
+      /* Surfaces / Cards */
+      --card-bg: rgba(15, 18, 40, 0.92);        /* Lesson panels */
+      --card-soft-bg: rgba(18, 21, 50, 0.88);   /* Tab cards and navigation buttons */
+      /* Neon accents */
+      --accent-cyan: #4ef2ff;   /* Cyan highlight around edges */
+      --accent-pink: #ff2f92;   /* Magenta highlight for buttons */
+      --accent-green: #4dff9b;  /* Success / tab completed mark */
+      --accent-yello: #ffe25f;  /* Accent blended in text gradients */
+      --accent-purple: #aa5dff; /* Hover glows and edges */
+      /* Text and borders */
+      --muted: rgba(255,255,255,0.65);
+      --border-glow: rgba(120,120,255,0.45);
+      /* Shadows */
+      --shadow-strong: 0 0 36px rgba(130,80,255,0.6);
+      --shadow-soft: 0 0 20px rgba(0,0,0,0.65);
+      /* Radii and transitions */
+      --radius-lg: 22px;
+      --radius-md: 16px;
+      --radius-sm: 10px;
+      --transition-fast: 0.18s ease-out;
+      --transition-med: 0.28s ease-out;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: var(--bg-gradient);
+      color: #fff;
+      min-height: 100vh;
+      padding: 32px 24px; /* Increased padding for more overall space */
+      display: flex;
+      justify-content: center;
+      line-height: 1.8; /* Increased line height for better readability */
+    }
+    .app { max-width: 1100px; width: 100%; }
+
+    /* HEADER */
+    .neon-header {
+      position: relative;
+      padding: 22px 24px 18px;
+      border-radius: var(--radius-lg);
+      background: rgba(3, 5, 20, 0.9);
+      box-shadow: var(--shadow-soft);
+      border: 1px solid var(--border-glow);
+      margin-bottom: 32px; /* Increased margin-bottom */
+      overflow: hidden;
+    }
+    .neon-header::before {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      background: linear-gradient(90deg, #00f5ff, #ff2f92, #ffe25f, #4dff9b);
+      opacity: 0.5;
+      mix-blend-mode: screen;
+      pointer-events: none;
+      z-index: -1;
+    }
+    .header-main { display: flex; align-items: center; gap: 20px; margin-bottom: 12px; } /* Increased gap and margin */
+    .teacher-orb {
+      width: 68px; height: 68px; border-radius: 50%;
+      background: radial-gradient(circle, #ffffff 0%, #00fff0 35%, #ff2f92 70%, #02030b 100%);
+      box-shadow: 0 0 24px rgba(0, 255, 255, 0.7), 0 0 32px rgba(255, 0, 160, 0.55);
+      flex-shrink: 0;
+    }
+    .brand-title {
+      font-size: 1.45rem;
+      background: linear-gradient(90deg, var(--accent-cyan), var(--accent-pink));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      line-height: 1.2;
+    }
+    .lesson-title {
+      font-size: 0.95rem;
+      color: var(--muted);
+      letter-spacing: 0.03em;
+    }
+    .header-description {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* TABS NAVIGATION */
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px; /* Increased gap */
+      margin-bottom: 28px; /* Increased margin-bottom */
+    }
+    .tab-button {
+      background: var(--card-soft-bg);
+      border: 1px solid rgba(120, 120, 255, 0.2);
+      border-radius: var(--radius-md);
+      padding: 12px 20px; /* Increased padding */
+      color: var(--muted);
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .tab-button:hover {
+      border-color: var(--accent-purple);
+      color: #fff;
+      box-shadow: 0 0 18px rgba(170, 93, 255, 0.3);
+      transform: translateY(-2px);
+    }
+    .tab-button.active {
+      background: linear-gradient(45deg, var(--accent-pink), var(--accent-purple));
+      color: #fff;
+      border-color: var(--accent-cyan);
+      box-shadow: 0 0 24px rgba(78, 242, 255, 0.4), 0 0 32px rgba(255, 47, 146, 0.4);
+      transform: translateY(-2px);
+    }
+
+    /* CONTENT PANELS */
+    .panels {
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      padding: 28px; /* Increased padding */
+      border: 1px solid var(--border-glow);
+      box-shadow: var(--shadow-strong);
+      position: relative;
+      overflow: hidden; /* Ensures pseudo-elements are clipped */
+    }
+    .panels::before {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      background: linear-gradient(45deg, var(--accent-cyan), var(--accent-pink), var(--accent-yello));
+      opacity: 0.15;
+      mix-blend-mode: screen;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .panel {
+      display: none;
+      animation: fadeIn 0.4s ease-out;
+      position: relative;
+      z-index: 1; /* Ensure content is above pseudo-element */
+    }
+    .panel.active { display: block; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* CARD INNER - Main content blocks */
+    .card-inner {
+      background: var(--card-soft-bg);
+      border-radius: var(--radius-md);
+      padding: 24px; /* Increased padding */
+      margin-bottom: 24px; /* Increased margin-bottom */
+      border: 1px solid rgba(120, 120, 255, 0.2);
+      box-shadow: 0 0 15px rgba(0,0,0,0.4);
+      position: relative;
+      overflow: hidden;
+    }
+    .card-inner:last-child { margin-bottom: 0; }
+    .card-inner::before {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      background: linear-gradient(135deg, rgba(78,242,255,0.1), rgba(255,47,146,0.1));
+      opacity: 0.3;
+      mix-blend-mode: screen;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* TEXT STYLES */
+    .section-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--accent-cyan);
+      margin-bottom: 16px; /* Increased margin */
+      line-height: 1.4;
+      background: linear-gradient(90deg, var(--accent-cyan), var(--accent-yello));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .section-sub {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--accent-green);
+      margin-bottom: 12px; /* Increased margin */
+      line-height: 1.5;
+    }
+    .sub-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--accent-purple);
+      margin-bottom: 10px;
+      line-height: 1.5;
+    }
+    p {
+      margin-bottom: 1em; /* Ensures good spacing between paragraphs */
+      color: rgba(255,255,255,0.85);
+    }
+    .pill-tag {
+      display: inline-block;
+      background: rgba(170, 93, 255, 0.2);
+      color: var(--accent-purple);
+      padding: 4px 10px;
+      border-radius: 18px;
+      font-size: 0.8em;
+      font-weight: 600;
+      margin-right: 8px;
+      margin-bottom: 8px;
+      border: 1px solid rgba(170, 93, 255, 0.4);
+    }
+    .emphasis {
+      color: var(--accent-yello);
+      font-weight: 700;
+      text-shadow: 0 0 8px rgba(255, 226, 95, 0.4);
+    }
+    .highlight {
+      color: var(--accent-cyan);
+      font-weight: 600;
+      text-shadow: 0 0 6px rgba(78, 242, 255, 0.3);
+    }
+    .portuguese-thinking {
+      background: rgba(255, 226, 95, 0.1);
+      border-left: 4px solid var(--accent-yello);
+      padding: 12px 18px;
+      margin: 15px 0;
+      border-radius: var(--radius-sm);
+      color: rgba(255,255,255,0.9);
+      font-style: italic;
+      font-size: 0.95em;
+    }
+    .portuguese-thinking strong {
+      color: var(--accent-yello);
+    }
+    .tip-box {
+      background: rgba(77, 255, 155, 0.1);
+      border-left: 4px solid var(--accent-green);
+      padding: 12px 18px;
+      margin: 15px 0;
+      border-radius: var(--radius-sm);
+      color: rgba(255,255,255,0.9);
+      font-size: 0.95em;
+    }
+    .tip-box strong {
+      color: var(--accent-green);
+    }
+
+    /* EXAMPLES */
+    .example-block {
+      background: rgba(255,255,255,0.08);
+      border-radius: var(--radius-sm);
+      padding: 15px 20px;
+      margin-top: 15px;
+      margin-bottom: 15px;
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+    .example-en {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .example-pt {
+      font-size: 0.95rem;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+    .example-explanation {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.7);
+      border-top: 1px dashed rgba(255,255,255,0.1);
+      padding-top: 10px;
+      margin-top: 10px;
+    }
+
+    /* MICRO-PRACTICE SECTION */
+    .micro-practice-section {
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    .micro-practice-section label {
+      display: block;
+      font-size: 0.95rem;
+      color: var(--accent-cyan);
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+    .micro-practice-section textarea {
+      width: 100%;
+      padding: 12px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-glow);
+      background: rgba(0,0,0,0.4);
+      color: #fff;
+      font-size: 1rem;
+      min-height: 80px;
+      resize: vertical;
+      transition: border-color var(--transition-fast);
+    }
+    .micro-practice-section textarea:focus {
+      outline: none;
+      border-color: var(--accent-green);
+      box-shadow: 0 0 10px rgba(77, 255, 155, 0.3);
+    }
+    .char-counter {
+      font-size: 0.8em;
+      color: var(--muted);
+      text-align: right;
+      margin-top: 5px;
+    }
+    .feedback-message {
+      margin-top: 10px;
+      font-size: 0.9em;
+      color: var(--accent-green);
+      font-weight: 600;
+    }
+
+    /* AUDIO PLAYBACK */
+    .audio-player {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+    .play-button {
+      background: var(--accent-pink);
+      border: none;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background var(--transition-fast), transform var(--transition-fast);
+      flex-shrink: 0;
+    }
+    .play-button:hover {
+      background: #ff5fbb;
+      transform: scale(1.05);
+    }
+    .play-button svg {
+      fill: #fff;
+      width: 16px;
+      height: 16px;
+    }
+    .audio-text {
+      font-size: 0.95rem;
+      color: var(--accent-cyan);
+      font-style: italic;
+    }
+
+    /* GLOBAL CONTROLS */
+    .controls-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .export-bar {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .action-button {
+      background: var(--accent-purple);
+      border: none;
+      border-radius: var(--radius-md);
+      padding: 12px 20px;
+      color: #fff;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .action-button:hover {
+      background: #b87bff;
+      box-shadow: 0 0 15px rgba(170, 93, 255, 0.5);
+      transform: translateY(-2px);
+    }
+    .action-button.green {
+      background: var(--accent-green);
+    }
+    .action-button.green:hover {
+      background: #6dffb8;
+      box-shadow: 0 0 15px rgba(77, 255, 155, 0.5);
+    }
+
+    /* AUDIO PRACTICE BUTTON */
+    .audio-practice-button {
+      background: var(--card-soft-bg);
+      border: 1px solid var(--accent-pink);
+      border-radius: var(--radius-md);
+      padding: 12px 20px;
+      color: var(--accent-pink);
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .audio-practice-button:hover {
+      background: rgba(255, 47, 146, 0.1);
+      box-shadow: 0 0 15px rgba(255, 47, 146, 0.4);
+      transform: translateY(-2px);
+    }
+    .audio-practice-button.recording {
+      background: var(--accent-pink);
+      color: #fff;
+      box-shadow: 0 0 20px var(--accent-pink);
+    }
+    .audio-practice-button .dot {
+      animation: pulse 1.5s infinite;
+    }
+    .audio-practice-button.recording .dot {
+      animation: none; /* Stop pulse when recording */
+    }
+    @keyframes pulse {
+      0% { opacity: 0.5; }
+      50% { opacity: 1; }
+      100% { opacity: 0.5; }
+    }
+    .audio-status {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    /* FOOTER */
+    .footer-nav {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    .footer-nav button {
+      background: var(--card-soft-bg);
+      border: 1px solid rgba(120, 120, 255, 0.2);
+      border-radius: var(--radius-md);
+      padding: 10px 18px;
+      color: var(--muted);
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .footer-nav button:hover {
+      border-color: var(--accent-purple);
+      color: #fff;
+      box-shadow: 0 0 12px rgba(170, 93, 255, 0.3);
+      transform: translateY(-1px);
+    }
+    .footer-nav button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      box-shadow: none;
+      transform: none;
+    }
+    .footer-meta {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.4);
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      body { padding: 20px 15px; }
+      .neon-header { margin-bottom: 20px; padding: 18px 20px; }
+      .header-main { flex-direction: column; text-align: center; gap: 10px; margin-bottom: 10px; }
+      .teacher-orb { width: 50px; height: 50px; }
+      .brand-title { font-size: 1.2rem; }
+      .lesson-title { font-size: 0.85rem; }
+      .tabs { flex-direction: column; align-items: stretch; gap: 8px; margin-bottom: 20px; }
+      .tab-button { padding: 10px 15px; justify-content: center; }
+      .panels { padding: 20px; }
+      .card-inner { padding: 18px; margin-bottom: 18px; }
+      .section-title { font-size: 1.1rem; margin-bottom: 12px; }
+      .section-sub { font-size: 1rem; margin-bottom: 10px; }
+      .example-en { font-size: 1rem; }
+      .example-pt { font-size: 0.9rem; }
+      .controls-row { flex-direction: column; gap: 15px; }
+      .export-bar { width: 100%; justify-content: center; }
+      .audio-practice-button { width: 100%; justify-content: center; }
+      .footer-nav { flex-direction: column; align-items: stretch; gap: 10px; }
+    }
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+  <div class="app">
+    <header class="neon-header">
+      <div class="header-main">
+        <div class="teacher-orb"></div>
+        <div>
+          <h1 class="brand-title">NEXTATION</h1>
+          <p class="lesson-title">Desvendando o Inglês Empresarial</p>
+        </div>
+      </div>
+      <p class="header-description">
+        Bem-vindo à lição de <span class="emphasis">Problemas Técnicos & Soluções</span>! Aqui você vai aprender e praticar frases essenciais para se comunicar de forma eficaz em situações de falhas, diagnósticos e resoluções no ambiente de trabalho. Prepare-se para falar com confiança sobre bugs, updates e planos de contingência! 🚀
+      </p>
+    </header>
+
+    <nav class="tabs">
+      <button class="tab-button active" onclick="showTab('overview')">🧠 Visão Geral</button>
+      <button class="tab-button" onclick="showTab('tab-experiencing-issue')">🚨 Experiencing an Issue</button>
+      <button class="tab-button" onclick="showTab('tab-look-into-it')">🕵️‍♂️ Look Into It</button>
+      <button class="tab-button" onclick="showTab('tab-critical-bug')">🐞 Critical Bug</button>
+      <button class="tab-button" onclick="showTab('tab-mandatory-update')">🔒 Mandatory Update</button>
+      <button class="tab-button" onclick="showTab('tab-root-cause')">🔍 Root Cause</button>
+      <button class="tab-button" onclick="showTab('tab-test-again')">🔄 Test It Again</button>
+      <button class="tab-button" onclick="showTab('tab-not-responding')">❌ Not Responding</button>
+      <button class="tab-button" onclick="showTab('tab-backup-plan')">🛡️ Backup Plan</button>
+      <button class="tab-button" onclick="showTab('tab-check-logs')">📊 Check Logs</button>
+      <button class="tab-button" onclick="showTab('tab-practice')">✍️ Hora da Prática!</button>
+    </nav>
+
+    <div class="panels">
+      <!-- Tab 1: Overview -->
+      <div id="overview" class="panel active">
+        <div class="card-inner">
+          <h2 class="section-title">🧠 Problemas Técnicos & Soluções: Visão Geral</h2>
+          <p>
+            No mundo corporativo, especialmente em áreas de tecnologia, saber comunicar problemas e soluções é fundamental. Esta lição vai te equipar com o vocabulário e as estruturas para lidar com <span class="emphasis">questões técnicas</span> de forma clara e profissional.
+          </p>
+          <p>
+            Vamos explorar frases para:
+            <ul>
+              <li><span class="highlight">Reportar</span> que algo não está funcionando.</li>
+              <li><span class="highlight">Indicar</span> que você vai investigar.</li>
+              <li><span class="highlight">Descrever</span> a gravidade de um problema.</li>
+              <li><span class="highlight">Falar</span> sobre atualizações e obrigatoriedades.</li>
+              <li><span class="highlight">Comunicar</span> diagnósticos e próximos passos.</li>
+              <li><span class="highlight">Propor</span> planos de contingência.</li>
+            </ul>
+          </p>
+          <div class="portuguese-thinking">
+            <strong>Pensamento Brasileiro:</strong> Muitas vezes, em português, somos mais diretos ou usamos gírias. Em inglês, no ambiente de trabalho, a <span class="emphasis">clareza e a formalidade adequada</span> são super valorizadas. Aprender essas frases te fará soar mais profissional e competente.
+          </div>
+          <p>
+            Pronto para desvendar o jargão técnico e resolver problemas em inglês? Vamos lá!
+          </p>
+        </div>
+
+        <div class="card-inner exercise-section">
+          <h3 class="section-sub">🚀 Aquecimento: Conecte o Termo</h3>
+          <p>Arraste e solte para conectar o termo técnico à sua explicação em português. (Simulação)</p>
+          <div class="exercise-content">
+            <p><strong>Bug:</strong> <span class="pill-tag">Falha de software</span></p>
+            <p><strong>Root Cause:</strong> <span class="pill-tag">Origem do problema</span></p>
+            <p><strong>Workaround:</strong> <span class="pill-tag">Solução alternativa</span></p>
+            <p><strong>Logs:</strong> <span class="pill-tag">Registros de sistema</span></p>
+          </div>
+          <div class="feedback-message" style="color: var(--accent-green);">
+            Ótimo! Você já tem uma base. Continue para as frases!
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 2: We are experiencing an issue. -->
+      <div id="tab-experiencing-issue" class="panel">
+        <div class="card-inner">
+          <h2 class="section-title">🚨 We are experiencing an issue.</h2>
+          <p class="example-pt">Português: Estamos enfrentando um problema.</p>
+
+          <div class="audio-player">
+            <button class="play-button" onclick="playAudio('We are experiencing an issue.')">
+              <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+            <span class="audio-text">"We are experiencing an issue."</span>
+          </div>
+
+          <div class="example-block">
+            <p class="sub-title">🧱 Desconstruindo:</p>
+            <p><span class="highlight">We | are experiencing | an issue.</span></p>
+            <p class="example-explanation">
+              <span class="emphasis">"Experiencing"</span> (Present Continuous) é uma forma mais formal e comum no ambiente de trabalho para dizer que algo está acontecendo ou sendo sentido. É mais profissional do que simplesmente "we have a problem".
+              <br>
+              <span class="highlight">"An issue"</span> é um termo genérico e profissional para "problema", "questão".
+            </p>
+          </div>
+
+          <div class="tip-box">
+            <strong>💡 Dica NEXTATION:</strong> Imagine que "experiencing" é como "vivenciando". Você não "tem" um problema, você o "vivencia". Isso dá um tom mais técnico e menos pessoal.
+          </div>
+
+          <div class="micro-practice-section">
+            <label for="practice-experiencing">✍️ Escreva a frase em inglês:</label>
+            <textarea id="practice-experiencing" oninput="countChars(this, 100)"></textarea>
+            <div class="char-counter">0/100</div>
+            <div class="feedback-message"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 3: I'll look into it. -->
+      <div id="tab-look-into-it" class="panel">
+        <div class="card-inner">
+          <h2 class="section-title">🕵️‍♂️ I'll look into it.</h2>
+          <p class="example-pt">Português: Vou verificar/investigar isso.</p>
+
+          <div class="audio-player">
+            <button class="play-button" onclick="playAudio('I will look into it.')">
+              <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+            <span class="audio-text">"I'll look into it."</span>
+          </div>
+
+          <div class="example-block">
+            <p class="sub-title">🧱 Desconstruindo:</p>
+            <p><span class="highlight">I'll | look into | it.</span></p>
+            <p class="example-explanation">
+              <span class="emphasis">"I'll"</span> é a contração de "I will", usada para decisões rápidas ou promessas no futuro.
+              <br>
+              <span class="highlight">"Look into"</span> é um phrasal verb que significa investigar, examinar, verificar. É muito comum no contexto de resolução de problemas.
+              <br>
+              <span class="highlight">"It"</span> se refere ao problema ou à questão mencionada.
+            </p>
+          </div>
+
+          <div class="portuguese-thinking">
+            <strong>Pensamento Brasileiro:</strong> Em português, diríamos "Vou dar uma olhada", "Vou verificar". "Look into" é o equivalente profissional e mais formal.
+          </div>
+
+          <div class="micro-practice-section">
+            <label for="practice-look-into">✍️ Escreva a frase em inglês:</label>
+            <textarea id="practice-look-into" oninput="countChars(this, 100)"></textarea>
+            <div class="char-counter">0/100</div>
+            <div class="feedback-message"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 4: It's a critical bug. -->
+      <div id="tab-critical-bug" class="panel">
+        <div class="card-inner">
+          <h2 class="section-title">🐞 It's a critical bug.</h2>
+          <p class="example-pt">Português: É um erro crítico.</p>
+
+          <div class="audio-player">
+            <button class="play-button" onclick="playAudio('It is a critical bug.')">
+              <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+            <span class="audio-text">"It's a critical bug."</span>
+          </div>
+
+          <div class="example-block">
+            <p class="sub-title">🧱 Desconstruindo:</p>
+            <p><span class="highlight">It's | a critical | bug.</span></p>
+            <p class="example-explanation">
+              <span class="emphasis">"It's"</span> é a contração de "It is".
+              <br>
+              <span class="highlight">"Critical"</span> significa crítico, urgente, de alta prioridade.
+              <br>
+              <span class="highlight">"Bug"</span> é o termo técnico universal para um erro ou falha em software.
+            </p>
+          </div>
+
+          <div class="tip-box">
+            <strong>💡 Dica NEXTATION:</strong> Use "critical" para indicar que o problema tem um impacto significativo e precisa de atenção imediata. Não confunda com "bug" de inseto! 😉
+          </div>
+
+          <div class="micro-practice-section">
+            <label for="practice-critical-bug">✍️ Escreva a frase em inglês:</label>
+            <textarea id="practice-critical-bug" oninput="countChars(this, 100)"></textarea>
+            <div class="char-counter">0/100</div>
+            <div class="feedback-message"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 5: This is a mandatory update. -->
+      <div id="tab-mandatory-update" class="panel">
+        <div class="card-inner">
+          <h2 class="section-title">🔒 This is a mandatory update.</h2>
+          <p class="example-pt">Português: Esta é uma atualização obrigatória.</p>
+
+          <div class="audio-player">
+            <button class="play-button" onclick="playAudio('This is a mandatory update.')">
+              <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+            <span class="audio-text">"This is a mandatory update."</span>
+          </div>
+
+          <div class="example-block">
+            <p class="sub-title">🧱 Desconstruindo:</p>
+            <p><span class="highlight">This | is a mandatory | update.</span></p>
+            <p class="example-explanation">
+              <span class="emphasis">"Mandatory"</span> significa obrigatório, compulsório. É um termo forte para indicar que algo não é opcional.
+              <br>
+              <span class="highlight">"Update"</span> é uma atualização, muito comum em tecnologia.
+            </p>
+          </div>
+
+          <div class="portuguese-thinking">
+            <strong>Pensamento Brasileiro:</strong> Em português, podemos dizer "é uma atualização que tem que fazer". Em inglês, "mandatory" é mais conciso e profissional.
+          </div>
+
+          <div class="micro-practice-section">
+            <label for="practice-mandatory-update">✍️ Escreva a frase em inglês:</label>
+            <textarea id="practice-mandatory-update" oninput="countChars(this, 100)"></textarea>
+            <div class="char-counter">0/100</div>
+            <div class="feedback-message"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 6: We identified the root cause. -->
+      <div id="tab-root-cause" class="panel">
+        <div class="card-inner">
+          <h2 class="section-title">🔍 We identified the root cause.</h2>
+          <p class="example-pt">Português: Identificamos a causa raiz.</p>
+
+          <div class="audio-player">
+            <button class="play-button" onclick="playAudio('We identified the root cause.')">
+              <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+            <span class="audio-text">"We identified the root cause."</span>
+          </div>
+
+          <div class="example-block">
+            <p class="sub-title">🧱 Desconstruindo:</p>
+            <p><span class="highlight">We | identified | the root cause.</span></p>
+            <p class="example-explanation">
+              <span class="emphasis">"Identified"</span> é o passado simples de "to identify" (identificar).
+              <br>
+              <span class="highlight">"Root cause"</span> é uma expressão técnica muito comum para a origem fundamental de um problema, não apenas um sintoma.
+            </p>
+          </div>
+
+          <div class="tip-box">
+            <strong>💡 Dica NEXTATION:</strong> "Root cause analysis" (análise da causa raiz) é um processo comum em gestão de projetos e TI. Conhecer "root cause" é essencial!
+          </div>
+
+          <div class="micro-practice-section">
+            <label for="practice-root-cause">✍️ Escreva a frase em inglês:</label>
+            <textarea id="practice-root-cause" oninput="countChars(this, 100)"></textarea>
+            <div class="char-counter">0/100</div>
+            <div class="feedback-message"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 7: Let's test it again. -->
+      <div id="tab-test-again" class="panel">
+        <div class="card-inner">
+          <h2 class="section-title">🔄 Let's test it again.</h2>
+          <p class="example-pt">Português: Vamos testar de novo.</p>
+
+          <div class="audio-player">
+            <button class="play-button" onclick="playAudio('Let us test it again.')">
+              <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+            <span class="audio-text">"Let's test it again."</span>
+          </div>
+
+          <div class="example-block">
+            <p class="sub-title">🧱 Desconstruindo:</p>
+            <p><span class="highlight">Let's | test | it again.</span></p>
+            <p class="example-explanation">
+              <span class="emphasis">"Let's"</span> é a contração de "Let us" e é usada para fazer uma sugestão ou convite para uma ação conjunta. É muito direto e amigável.
+              <br>
+              <span class="highlight">"Test it again"</span> significa testar algo novamente.
+            </p>
+          </div>
+
+          <div class="portuguese-thinking">
+            <strong>Pensamento Brasileiro:</strong> "Vamos testar de novo" é bem parecido. "Let's" é super intuitivo para nós!
+          </div>
+
+          <div class="micro-practice-section">
+            <label for="practice-test-again">✍️ Escreva a frase em inglês:</label>
+            <textarea id="practice-test-again" oninput="countChars(this, 100)"></textarea>
+            <div class="char-counter">0/100</div>
+            <div class="feedback-message"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 8: The system is not responding. -->
+      <div id="tab-not-responding" class="panel">
+        <div class="card-inner">
+          <h2 class="section-title">❌ The system is not responding.</h2>
+          <p class="example-pt">Português: O sistema não está respondendo.</p>
+
+          <div class="audio-player">
+            <button class="play-button" onclick="playAudio('The system is not responding.')">
+              <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+            <span class="audio-text">"The system is not responding."</span>
+          </div>
+
+          <div class="example-block">
+            <p class="sub-title">🧱 Desconstruindo:</p>
+            <p><span class="highlight">The system | is not | responding.</span></p>
+            <p class="example-explanation">
+              <span class="emphasis">"Is not responding"</span> é a forma negativa do Present Continuous, indicando uma ação (ou falta dela) que está acontecendo agora.
+              <br>
+              <span class="highlight">"Responding"</span> (do verbo "to respond") significa responder.
+            </p>
+          </div>
+
+          <div class="tip-box">
+            <strong>💡 Dica NEXTATION:</strong> Essa estrutura é padrão para descrever um estado atual de falha ou inatividade. "The server is not responding", "My computer is not responding".
+          </div>
+
+          <div class="micro-practice-section">
+            <label for="practice-not-responding">✍️ Escreva a frase em inglês:</label>
+            <textarea id="practice-not-responding" oninput="countChars(this, 100)"></textarea>
+            <div class="char-counter">0/100</div>
+            <div class="feedback-message"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 9: We need a backup plan. -->
+      <div id="tab-backup-plan" class="panel">
+        <div class="card-inner">
+          <h2 class="section-title">🛡️ We need a backup plan.</h2>
+          <p class="example-pt">Português: Precisamos de um plano B.</p>
+
+          <div class="audio-player">
+            <button class="play-button" onclick="playAudio('We need a backup plan.')">
+              <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+            <span class="audio-text">"We need a backup plan."</span>
+          </div>
+
+          <div class="example-block">
+            <p class="sub-title">🧱 Desconstruindo:</p>
+            <p><span class="highlight">We | need | a backup plan.</span></p>
+            <p class="example-explanation">
+              <span class="emphasis">"Need"</span> (precisar) é um verbo direto.
+              <br>
+              <span class="highlight">"Backup plan"</span> é uma expressão comum que significa um plano alternativo ou de contingência, o nosso "plano B".
+            </p>
+          </div>
+
+          <div class="portuguese-thinking">
+            <strong>Pensamento Brasileiro:</strong> Usamos muito "plano B". "Backup plan" é o equivalente perfeito e profissional em inglês.
+          </div>
+
+          <div class="micro-practice-section">
+            <label for="practice-backup-plan">✍️ Escreva a frase em inglês:</label>
+            <textarea id="practice-backup-plan" oninput="countChars(this, 100)"></textarea>
+            <div class="char-counter">0/100</div>
+            <div class="feedback-message"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 10: I can check the logs. -->
+      <div id="tab-check-logs" class="panel">
+        <div class="card-inner">
+          <h2 class="section-title">📊 I can check the logs.</h2>
+          <p class="example-pt">Português: Posso verificar os registros.</p>
+
+          <div class="audio-player">
+            <button class="play-button" onclick="playAudio('I can check the logs.')">
+              <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+            <span class="audio-text">"I can check the logs."</span>
+          </div>
+
+          <div class="example-block">
+            <p class="sub-title">🧱 Desconstruindo:</p>
+            <p><span class="highlight">I | can | check | the logs.</span></p>
+            <p class="example-explanation">
+              <span class="emphasis">"Can"</span> é um modal verb que expressa capacidade ou possibilidade (posso, consigo).
+              <br>
+              <span class="highlight">"Check"</span> (verificar) é o verbo principal.
+              <br>
+              <span class="highlight">"Logs"</span> é o termo técnico para registros de sistema, arquivos de log.
+            </p>
+          </div>
+
+          <div class="tip-box">
+            <strong>💡 Dica NEXTATION:</strong> Oferecer ajuda com "I can..." é uma forma proativa e útil no ambiente de trabalho. "Logs" é um jargão que você ouvirá muito em TI.
+          </div>
+
+          <div class="micro-practice-section">
+            <label for="practice-check-logs">✍️ Escreva a frase em inglês:</label>
+            <textarea id="practice-check-logs" oninput="countChars(this, 100)"></textarea>
+            <div class="char-counter">0/100</div>
+            <div class="feedback-message"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 11: Practice Time! -->
+      <div id="tab-practice" class="panel">
+        <div class="card-inner">
+          <h2 class="section-title">✍️ Hora da Prática!</h2>
+          <p>
+            Agora é a sua vez de consolidar o aprendizado! Use as frases e estruturas que você aprendeu para criar suas próprias sentenças em cenários de problemas técnicos.
+          </p>
+          <div class="tip-box">
+            <strong>Desafio:</strong> Tente criar uma pequena conversa ou um e-mail curto usando pelo menos 3 das frases desta lição. Imagine que você está reportando um problema e oferecendo ajuda.
+          </div>
+          <div class="micro-practice-section">
+            <label for="final-practice">Crie suas frases ou um pequeno texto aqui:</label>
+            <textarea id="final-practice" oninput="countChars(this, 500)"></textarea>
+            <div class="char-counter">0/500</div>
+            <div class="feedback-message"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="controls-row">
+        <div class="export-bar">
+          <button class="action-button green" onclick="copyToSpreadsheet()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2z"></path><line x1="12" y1="1" x2="12" y2="23"></line><path d="M3 12h18"></path></svg>
+            Copiar para Planilha
+          </button>
+          <button class="action-button" onclick="exportPdf()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+            Exportar PDF
+          </button>
+        </div>
+
+        <button id="record-btn" class="audio-practice-button" onclick="togglePractice()">
+          <span id="record-dot" class="dot">⏺️</span>
+          <span id="record-text">Marcar momento de prática</span>
+        </button>
+      </div>
+      <div id="audio-status" class="audio-status">Nenhum áudio real é gravado – use o botão como compromisso de prática em voz alta. 🎧</div>
+    </div>
+
+    <footer class="footer-nav">
+      <button onclick="showPreviousTab()" id="prev-tab-btn" disabled>
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        Anterior
+      </button>
+      <button onclick="showNextTab()" id="next-tab-btn">
+        Próximo
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+    </footer>
+    <p class="footer-meta">NEXTATION © 2026. Todos os direitos reservados.</p>
+  </div>
+
+  <script>
+    let currentTabIndex = 0;
+    const tabButtons = Array.from(document.querySelectorAll('.tab-button'));
+    const panels = Array.from(document.querySelectorAll('.panel'));
+    const prevBtn = document.getElementById('prev-tab-btn');
+    const nextBtn = document.getElementById('next-tab-btn');
+
+    // --- Tab Navigation ---
+    function showTab(tabId) {
+      panels.forEach(panel => panel.classList.remove('active'));
+      tabButtons.forEach(button => button.classList.remove('active'));
+
+      const targetPanel = document.getElementById(tabId);
+      const targetButton = document.querySelector(`.tab-button[onclick="showTab('${tabId}')"]`);
+
+      if (targetPanel && targetButton) {
+        targetPanel.classList.add('active');
+        targetButton.classList.add('active');
+        currentTabIndex = tabButtons.indexOf(targetButton);
+        updateNavigationButtons();
+      }
+      resetPractice(); // Reset practice button state when changing tabs
+    }
+
+    function showNextTab() {
+      if (currentTabIndex < tabButtons.length - 1) {
+        currentTabIndex++;
+        showTab(tabButtons[currentTabIndex].onclick.toString().match(/'([^']+)'/)[1]);
+      }
+    }
+
+    function showPreviousTab() {
+      if (currentTabIndex > 0) {
+        currentTabIndex--;
+        showTab(tabButtons[currentTabIndex].onclick.toString().match(/'([^']+)'/)[1]);
+      }
+    }
+
+    function updateNavigationButtons() {
+      prevBtn.disabled = currentTabIndex === 0;
+      nextBtn.disabled = currentTabIndex === tabButtons.length - 1;
+    }
+
+    // --- Text-to-Speech ---
+    function playAudio(text) {
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'en-US'; // Force English accent
+      speechSynthesis.speak(utterance);
+    }
+
+    // --- Character Counter for Textareas ---
+    function countChars(textarea, maxChars) {
+      const currentLength = textarea.value.length;
+      const counter = textarea.nextElementSibling; // Assumes char-counter is the next sibling
+      const feedback = counter.nextElementSibling; // Assumes feedback-message is after counter
+
+      counter.textContent = `${currentLength}/${maxChars}`;
+
+      if (currentLength > maxChars) {
+        textarea.style.borderColor = 'var(--accent-pink)';
+        feedback.textContent = 'Limite de caracteres excedido!';
+        feedback.style.color = 'var(--accent-pink)';
+      } else {
+        textarea.style.borderColor = 'var(--border-glow)';
+        feedback.textContent = 'Ótimo! Continue praticando.';
+        feedback.style.color = 'var(--accent-green)';
+      }
+    }
+
+    // --- Audio Practice Button ---
+    let recording = false;
+    function togglePractice(){
+      recording = !recording;
+      const btn = document.getElementById('record-btn');
+      const txt = document.getElementById('record-text');
+      const dot = document.getElementById('record-dot');
+      const status = document.getElementById('audio-status');
+      if(!btn || !txt || !dot || !status) return;
+
+      if(recording){
+        btn.classList.add('recording');
+        dot.textContent = '🔴';
+        txt.textContent = 'Praticando agora...';
+        status.innerHTML = 'Momento de prática: fale em voz alta suas frases sobre problemas técnicos. Use: <strong>experiencing an issue, look into it, critical bug, mandatory update, root cause, test it again, not responding, backup plan, check the logs</strong> e outros que você criar! 🎧';
+      }else{
+        btn.classList.remove('recording');
+        dot.textContent = '⏺️';
+        txt.textContent = 'Marcar momento de prática';
+        status.textContent = 'Prática pausada. Clique de novo quando quiser focar na fala.';
+      }
+    }
+
+    function resetPractice(){
+      recording = false;
+      const btn = document.getElementById('record-btn');
+      const txt = document.getElementById('record-text');
+      const dot = document.getElementById('record-dot');
+      const status = document.getElementById('audio-status');
+      if(!btn || !txt || !dot || !status) return;
+
+      btn.classList.remove('recording');
+      dot.textContent = '⏺️';
+      txt.textContent = 'Marcar momento de prática';
+      status.innerHTML = 'Nenhum áudio real é gravado – use o botão como compromisso de prática em voz alta. 🎧';
+    }
+
+    // --- Copy to Spreadsheet ---
+    function copyToSpreadsheet(){
+      const text = collectLessonText();
+      if(!navigator.clipboard){
+        alert('Seu navegador não permite cópia automática. Selecione o texto manualmente.');
+        return;
+      }
+      navigator.clipboard.writeText(text).then(()=>{
+        alert('Conteúdo copiado! Cole (Ctrl+V) na sua planilha.');
+      }).catch(()=>{
+        alert('Não foi possível copiar automaticamente. Selecione e copie manualmente.');
+      });
+    }
+
+    function collectLessonText(){
+      const blocks = [];
+      document.querySelectorAll('.card-inner').forEach(inner=>{
+        const clone = inner.cloneNode(true);
+        // Remove interactive elements and non-content parts from the cloned content
+        clone.querySelectorAll('button, input, textarea, select, label, .micro-practice-section, .super-tip, .char-counter, .feedback-message, .controls-row, .export-bar, .footer-nav, .footer-meta, .neon-header, .tabs, .app, .block-container ul, .example-en, .example-pt, .section-sub, .section-title, .sub-title, .exercise-section, .diagram-container, .syllable-counter-section, .adjective-example, .mistake-item, .tip-box, .portuguese-thinking').forEach(el=>el.remove());
+        // Clean up extra spaces/newlines
+        let cleanedText = clone.innerText.trim();
+        cleanedText = cleanedText.replace(/\s{2,}/g, ' '); // Replace multiple spaces with single space
+        cleanedText = cleanedText.replace(/\n\s*\n/g, '\n\n'); // Replace multiple newlines with double newline
+        blocks.push(cleanedText);
+      });
+      return blocks.join('\n\n-----------------------------\n\n');
+    }
+
+    // --- Export to PDF ---
+    async function exportPdf() {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF('p', 'pt', 'a4'); // 'p' for portrait, 'pt' for points, 'a4' for A4 size
+
+        const content = document.querySelector('.panels'); // Select the main content area
+
+        // Temporarily show all panels to capture content for PDF
+        const allPanels = document.querySelectorAll('.panel');
+        allPanels.forEach(panel => panel.style.display = 'block');
+
+        // Capture content with html2canvas
+        const canvas = await html2canvas(content, {
+            scale: 2, // Increase scale for better resolution
+            useCORS: true, // Enable cross-origin images if any
+            windowWidth: content.scrollWidth,
+            windowHeight: content.scrollHeight,
+            x: content.offsetLeft,
+            y: content.offsetTop,
+            width: content.offsetWidth,
+            height: content.offsetHeight
+        });
+
+        // Restore original panel display
+        allPanels.forEach(panel => panel.style.display = 'none');
+        document.querySelector('.panel.active').style.display = 'block'; // Show only the active panel again
+
+        const imgData = canvas.toDataURL('image/png');
+        const imgWidth = 595; // A4 width in points
+        const pageHeight = 842; // A4 height in points
+        const imgHeight = canvas.height * imgWidth / canvas.width;
+        let heightLeft = imgHeight;
+
+        let position = 0;
+
+        doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+
+        while (heightLeft >= 0) {
+            position = heightLeft - imgHeight;
+            doc.addPage();
+            doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+            heightLeft -= pageHeight;
+        }
+
+        doc.save('NEXTATION_Lesson_Technical_Issues_Problem_Solving.pdf');
+    }
+
+    // Initial tab display on page load
+    document.addEventListener('DOMContentLoaded', () => {
+      showTab('overview');
+    });
+  </script>
+</body>
+</html>
